@@ -193,20 +193,16 @@ void LawnMower::Update()
         if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
             continue;
 
-        if (aZombie->mRow - mRow)
+        if (aZombie->mRow - mRow != 0)
             continue;
 
-        if (aZombie->mZombieType != ZombieType::ZOMBIE_BOSS && 
-            aZombie->mRow - mRow == 0 && 
-            aZombie->mZombiePhase != ZombiePhase::PHASE_ZOMBIE_MOWERED && 
-            !aZombie->IsTangleKelpTarget() && 
-            aZombie->EffectedByDamage(127U))
+        if (aZombie->mZombiePhase != ZombiePhase::PHASE_ZOMBIE_MOWERED && !aZombie->IsTangleKelpTarget() && aZombie->EffectedByDamage(127U))
         {
             Rect aZombieRect = aZombie->GetZombieRect();
             int aOverlap = GetRectOverlap(aAttackRect, aZombieRect);
             if (aOverlap > (aZombie->mZombieType == ZombieType::ZOMBIE_BALLOON ? 20 : 0))
             {
-                // 蹦极僵尸或已死亡的僵尸不能主动触发小推车
+                // 韫︽瀬鍍靛案鎴栧凡姝讳骸鐨勫兊灏镐笉鑳戒富鍔ㄨЕ鍙戝皬鎺ㄨ溅
                 if (mMowerState != LawnMowerState::MOWER_READY || (aZombie->mZombieType != ZombieType::ZOMBIE_BUNGEE && aZombie->mHasHead))
                 {
                     MowZombie(aZombie);
